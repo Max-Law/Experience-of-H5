@@ -1,0 +1,151 @@
+//响应式设计
+//断点分段 - iphone5/iphone6:375px , iphone6/iphonePlus:414px , iphonePlus/ipad:768px , ipad/ipadPro:1024px
+$breakpoints: ( small: 375px, medium: 414px, large: 768px, Pro:1024px);
+//通用字体断点-maps
+$font-sizes: ( default: 12px, small: 13px, medium: 14px, large: 16px, Pro:24px);
+//p标签字体断点-maps
+$p-font-sizes: ( default: 13px, small: 14px, medium: 15px, large: 17px, Pro:24px);
+//字体响应式函数
+@mixin font-size($fs-map, $fs-breakpoints: $breakpoints) {
+    @each $fs-breakpoint,
+    $fs-font-size in $fs-map {
+        @if $fs-breakpoint==default {
+            font-size: $fs-font-size;
+        }
+        @else {
+            @if map-has-key($fs-breakpoints, $fs-breakpoint) {
+                $fs-breakpoint: map-get($fs-breakpoints, $fs-breakpoint);
+            }
+            @media screen and (min-width: $fs-breakpoint) {
+                font-size: $fs-font-size;
+            }
+        }
+    }
+}
+
+//功能性函数
+//绝对居中函数 ：父级添加相对定位 -{position: relative;}；子级 - @include center;
+//无宽高不传参，用translate定位；含高传高：用translateX定位；@include center($height: 400px); 含宽传宽：用translateY定位；
+//传宽高则用负 margin居中，此方法不存在兼容问题；最简单是Flexbox布局，低版本的ios有问题，maybe ios8以下；
+@mixin center($width: null, $height: null) {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    @if not $width and not $height {
+        transform: translate(-50%, -50%);
+    }
+    @else if $width and $height {
+        width: $width;
+        height: $height;
+        margin: -($width / 2) #{0 0} -($height / 2);
+    }
+    @else if not $height {
+        width: $width;
+        margin-left: -($width / 2);
+        transform: translateY(-50%);
+    }
+    @else {
+        height: $height;
+        margin-top: -($height / 2);
+        transform: translateX(-50%);
+    }
+}
+
+//浏览器前缀函数 ： 当真机出现显示不正常可以尝试添加前缀的hack方式
+@mixin prefix($property, $value) {
+    @each $prefix in -webkit-,
+    -moz-,
+    -ms-,
+    -o-,
+    '' {
+        #{$prefix}#{$property}: $value;
+    }
+}
+
+//px转rem
+@function px2rem($px) {
+    @if (unitless($px)) {
+        //@warn "The default is px"; - 默认此为 px，未写单位像素直接转换
+        @return px2rem($px + 0px);
+    }
+    @return ($px / $base-viewport) * 10rem;
+}
+
+//绝对定位 - 顺时针（上右下左）
+@mixin abs-pos ($top: auto, $right: auto, $bottom: auto, $left: auto) {
+    position: absolute;
+    @if $top !=null {
+        top: px2rem($top);
+    }
+    @if $right !=null {
+        right: px2rem($right);
+    }
+    @if $bottom !=null {
+        bottom: px2rem($bottom);
+    }
+    @if $left !=null {
+        left: px2rem($left);
+    }
+}
+
+//Retina图片
+@mixin image-2x($image, $width, $height) {
+    @media (min--moz-device-pixel-ratio: 1.3), (-o-min-device-pixel-ratio: 2.6/2), (-webkit-min-device-pixel-ratio: 1.3), (min-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
+        /* on retina,使用2倍图片 */
+        background-image: url($image);
+        background-size: $width $height;
+    }
+}
+
+//z-index管理 ：用z-layers的maps管理  z-index: z("modal", "base");
+$z-layers: ( 'goku': 9001, 'shoryuken': 8000, 'modal': ( 'error':1000, 'base': 500, 'close': 100, 'header': 50, 'footer': 10), 'default': 1, 'below': -1, 'bottomless-pit': -9000);
+@function map-has-nested-keys($map, $keys...) {
+    @each $key in $keys {
+        @if not map-has-key($map, $key) {
+            @return false;
+        }
+        $map: map-get($map, $key);
+    }
+    @return true;
+}
+
+@function map-deep-get($map, $keys...) {
+    @each $key in $keys {
+        $map: map-get($map, $key);
+    }
+    @return $map;
+}
+
+@function z($layers...) {
+    @if not map-has-nested-keys($z-layers, $layers...) {
+        @warn "No layer found for `#{inspect($layers...)}` in $z-layers map. Property omitted.";
+    }
+    @return map-deep-get($z-layers, $layers...);
+}
+
+//清除浮动
+@mixin clearfix() {
+    &:before,
+    &:after {
+        content: "";
+        display: table;
+    }
+    &:after {
+        clear: both;
+    }
+}
+
+//超出省略号
+@mixin overflow($tag: null) {
+    @if not $tag {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    @else if $tag {
+        display: -webkit-box;
+        -webkit-line-clamp: $tag;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+}

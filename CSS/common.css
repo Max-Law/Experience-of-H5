@@ -1,0 +1,222 @@
+@charset "UTF-8";
+/*样式重置*/
+html {
+  overflow-y: scroll;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%; }
+
+html * {
+  outline: none;
+  -webkit-text-size-adjust: none;
+  -webkit-tap-highlight-color: transparent; }
+
+body {
+  color: #333333;
+  font-size: 12px;
+  font-family: PingFang SC, PingFang TC, PingFang HK, Source Han Sans, Noto CJK, Helvetica Neue, Helvetica, sans-serif;
+  background-color: #F0EFF5; }
+  @media screen and (min-width: 375px) {
+    body {
+      font-size: 13px; } }
+  @media screen and (min-width: 414px) {
+    body {
+      font-size: 14px; } }
+  @media screen and (min-width: 768px) {
+    body {
+      font-size: 16px; } }
+  @media screen and (min-width: 1024px) {
+    body {
+      font-size: 24px; } }
+
+p {
+  font-size: 13px; }
+  @media screen and (min-width: 375px) {
+    p {
+      font-size: 14px; } }
+  @media screen and (min-width: 414px) {
+    p {
+      font-size: 15px; } }
+  @media screen and (min-width: 768px) {
+    p {
+      font-size: 17px; } }
+  @media screen and (min-width: 1024px) {
+    p {
+      font-size: 24px; } }
+
+body,
+div,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+pre,
+code,
+form,
+fieldset,
+legend,
+input,
+textarea,
+p,
+blockquote,
+th,
+td,
+hr,
+button,
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  margin: 0;
+  padding: 0; }
+
+input,
+select,
+textarea {
+  font-size: 100%; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+fieldset,
+img {
+  border: 0; }
+
+abbr,
+acronym {
+  border: 0;
+  font-variant: normal; }
+
+del {
+  text-decoration: line-through; }
+
+address,
+caption,
+cite,
+code,
+dfn,
+em,
+th,
+var {
+  font-style: normal;
+  font-weight: 500; }
+
+ol,
+ul {
+  list-style: none; }
+
+caption,
+th {
+  text-align: left; }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: 100%;
+  font-weight: 500; }
+
+q:before,
+q:after {
+  content: ''; }
+
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline; }
+
+sup {
+  top: -0.5em; }
+
+sub {
+  bottom: -0.25em; }
+
+ins,
+a {
+  text-decoration: none; }
+
+/*功能样式*/
+.hide {
+  display: none; }
+
+.clearfix:before,
+.clearfix:after {
+  content: "";
+  display: table; }
+
+.clearfix:after {
+  clear: both; }
+
+.left {
+  float: left; }
+
+.right {
+  float: right; }
+
+.mui-toast-container {
+  width: 70%; }
+/*error.scss*/
+#errorBox {
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  position: absolute;
+  top: 0rem;
+  right: 0rem;
+  bottom: 0rem;
+  left: 0rem;
+  background-color: #F0EFF5; }
+  #errorBox .error {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); }
+  #errorBox .errorImg {
+    background: url("../img/errorLoad.png") no-repeat center;
+    background-size: 5.86667rem 5.62667rem;
+    width: 5.86667rem;
+    height: 5.62667rem; }
+  #errorBox .slogan {
+    margin-top: 0.53333rem;
+    text-align: center;
+    color: #666666; }
+/*loading.scss*/
+#loadingBox {
+  width: 100%;
+  height: 100%;
+  z-index: 8000;
+  position: absolute;
+  top: 0rem;
+  right: 0rem;
+  bottom: 0rem;
+  left: 0rem;
+  background-color: #FFFFFF; }
+  #loadingBox .loadingImg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: url("../img/loading.gif") no-repeat;
+    background-size: 100%;
+    background-position: center;
+    width: 100%;
+    height: 100%; }
